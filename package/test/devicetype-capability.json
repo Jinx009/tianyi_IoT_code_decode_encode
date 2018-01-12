@@ -1,18 +1,1 @@
-{
-    "devices": [
-        {
-            "manufacturerId": "Zhanway",
-            "manufacturerName": "Zhanway",
-            "model": "ZW-MNB01",
-            "protocolType": "CoAP",
-            "deviceType": "Sensor",
-            "serviceTypeCapabilities": [
-                {
-                    "serviceId": "SensorData",
-                    "serviceType": "SensorData",
-                    "option": "Master"
-                }
-            ]
-        }
-    ]
-}
+{"devices":[{"manufacturerName":"Zhanway","manufacturerId":"Zhanway","model":"ZWMNB01","protocolType":"CoAP","deviceType":"SmartDevice","serviceTypeCapabilities":[{"serviceId":"data","serviceType":"data","option":"Optional"}]}]}

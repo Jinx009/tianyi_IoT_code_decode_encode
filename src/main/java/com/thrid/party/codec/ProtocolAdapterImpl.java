@@ -34,7 +34,7 @@ public class ProtocolAdapterImpl implements IProtocolAdapter {
     }
 
     public byte[] encode(ObjectNode input) throws Exception {
-        logger.info("dynamic lrbtest " + input.toString());
+        System.out.println("dynamic lrbtest " + input.toString());
         try {
             CmdProcess cmdProcess = new CmdProcess(input);
             byte[] byteNode = cmdProcess.toByte();

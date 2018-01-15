@@ -2,6 +2,7 @@ package com.thrid.party.codec;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ReportProcess {
@@ -30,11 +31,11 @@ public class ReportProcess {
                       ]
 	    }
 	    */
-    	 msgType = "deviceReq";
-         hasMore = 0;
-         identifier = "zhanway_device";
-         serviceData = bytesToHexString(binaryData);
-         serviceId = "data";
+    	 this.msgType = "deviceReq";
+    	 this.hasMore = 0;
+    	 this.identifier = "zhanway_device";
+    	 this.serviceData = bytesToHexString(binaryData);
+    	 this.serviceId = "data";
     }
 
     public static String bytesToHexString(byte[] src){   
@@ -80,7 +81,8 @@ public class ReportProcess {
             return root;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            ObjectNode root = new ObjectNode(new JsonNodeFactory(false));
+            return root;
         }
     }
 	

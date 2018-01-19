@@ -72,7 +72,9 @@ public class ReportProcess {
                 //serviceId=Brightness 数据组装
                 ObjectNode service = mapper.createObjectNode();
                 service.put("serviceId", this.serviceId);
-                service.put("serviceData", serviceData);
+                ObjectNode data = mapper.createObjectNode();
+                data.put("data", serviceData);
+                service.put("serviceData",data);
                 arrynode.add(service);
                 root.put("data", arrynode);
                 return root;

@@ -88,21 +88,19 @@ public class ReportProcess {
 	
     private static byte[] initDeviceReqByte() {
         /**
-         * 本例入参： AA 72 00 00 32 08 8D 03 20 62 33 99
+         * 48 16 35 06 F8 03 01 47 0C 01
          */
         byte[] byteDeviceReq = new byte[12];
-        byteDeviceReq[0] = (byte) 0xAA;
-        byteDeviceReq[1] = (byte) 0x72;
-        byteDeviceReq[2] = (byte) 0x00;
-        byteDeviceReq[3] = (byte) 0x00;
-        byteDeviceReq[4] = (byte) 0x32;
-        byteDeviceReq[5] = (byte) 0x08;
-        byteDeviceReq[6] = (byte) 0x8D;
-        byteDeviceReq[7] = (byte) 0x03;
-        byteDeviceReq[8] = (byte) 0x20;
-        byteDeviceReq[9] = (byte) 0x62;
-        byteDeviceReq[10] = (byte) 0x33;
-        byteDeviceReq[11] = (byte) 0x99;
+        byteDeviceReq[0] = (byte) 0x48;
+        byteDeviceReq[1] = (byte) 0x16;
+        byteDeviceReq[2] = (byte) 0x35;
+        byteDeviceReq[3] = (byte) 0x06;
+        byteDeviceReq[4] = (byte) 0xF8;
+        byteDeviceReq[5] = (byte) 0x03;
+        byteDeviceReq[6] = (byte) 0x01;
+        byteDeviceReq[7] = (byte) 0x47;
+        byteDeviceReq[8] = (byte) 0x0C;
+        byteDeviceReq[9] = (byte) 0x01;
         return byteDeviceReq;
     }
 	

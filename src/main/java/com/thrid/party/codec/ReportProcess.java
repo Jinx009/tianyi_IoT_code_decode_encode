@@ -13,24 +13,6 @@ public class ReportProcess {
     private String serviceData = "0";
     
     public ReportProcess(byte[] binaryData) {
-
-        /*
-        如果是设备上报数据，返回格式为
-        {
-            "identifier":"123",
-            "msgType":"deviceReq",
-            "hasMore":0,
-            "data":[{"serviceId":"Brightness",
-                      "serviceData":{"brightness":50},
-                      {
-                      "serviceId":"Electricity",
-                      "serviceData":{"voltage":218.9,"current":800,"frequency":50.1,"powerfactor":0.98},
-                      {
-                      "serviceId":"Temperature",
-                      "serviceData":{"temperature":25},
-                      ]
-	    }
-	    */
     	 this.msgType = "deviceReq";
     	 this.hasMore = 0;
     	 this.identifier = "zhanway_device";
@@ -108,6 +90,10 @@ public class ReportProcess {
 	
 	public static void main(String[] args) {
 		byte[] b = initDeviceReqByte();
+		System.out.println(b);
+		String s = bytesToHexString(b);
+		System.out.println(s);
+		System.out.println(CmdProcess.toBytes(s));
 		ReportProcess zhanwayProcess = new ReportProcess(b);
         ObjectNode objectNode = zhanwayProcess.toJsonNode();
         System.out.println(objectNode.toString());

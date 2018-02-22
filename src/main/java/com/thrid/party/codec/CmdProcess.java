@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class CmdProcess {
 
-    //private String identifier = "123";
     private String msgType = "deviceReq";
     private String cmd = "command";
     private int hasMore = 0;
     private int errcode = 0;
-    private int mid = 0;
     private JsonNode paras;
 
 
@@ -18,95 +16,90 @@ public class CmdProcess {
     }
 
     public CmdProcess(ObjectNode input) {
-
         try {
-            // this.identifier = input.get("identifier").asText();
+        	this.errcode = 0;
+        	this.hasMore = 0;
             this.msgType = input.get("msgType").asText();
-            /*
-            平台收到设备上报消息，编码ACK
-            {
-                "identifier":"0",
-                "msgType":"cloudRsp",
-                "request": ***,//设备上报的码流
-                "errcode":0,
-                "hasMore":0
-            }
-            * */
-            if (msgType.equals("cloudRsp")) {
-                //在此组装ACK的值
-                this.errcode = input.get("errcode").asInt();
-                this.hasMore = input.get("hasMore").asInt();
-            } else {
-            /*
-            平台下发命令到设备，输入
-            {
-                "identifier":0,
-                "msgType":"cloudReq",
-                "serviceId":"WaterMeter",
-                "cmd":"SET_DEVICE_LEVEL",
-                "paras":{"value":"20"},
-                "hasMore":0
-
-            }
-            * */
-                //此处需要考虑兼容性，如果没有传mId，则不对其进行编码
-                if (input.get("mid") != null) {
-                    this.mid = input.get("mid").intValue();
-                }
-                this.cmd = input.get("cmd").asText();
-                this.paras = input.get("paras");
-                this.hasMore = input.get("hasMore").asInt();
-            }
-
+            this.cmd = input.get("cmd").asText();
+            this.paras = input.get("paras");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public byte[] toByte() {
         try {
             if (this.msgType.equals("cloudReq")) {
                 /*
-                应用服务器下发的控制命令，本例只有一条控制命令：SET_DEVICE_LEVEL
+                应用服务器下发的控制命令，本例只有一条控制命令：CMD_DATA
                 如果有其他控制命令，增加判断即可。
                 * */
-                if (this.cmd.equals("SET_DEVICE_LEVEL")) {
-                    int brightlevel = paras.get("value").asInt();
-                    byte[] byteRead = new byte[5];
-                    byteRead[0] = (byte) 0xAA;
-                    byteRead[1] = (byte) 0x72;
-                    byteRead[2] = (byte) brightlevel;
-
-                    //此处需要考虑兼容性，如果没有传mId，则不对其进行编码
-                    if (Utilty.getInstance().isValidofMid(mid)) {
-                        byte[] byteMid = new byte[2];
-                        byteMid = Utilty.getInstance().int2Bytes(mid, 2);
-                        byteRead[3] = byteMid[0];
-                        byteRead[4] = byteMid[1];
-                    }
-
-                    return byteRead;
+                if (this.cmd.equals("CMD_DATA")) {
+                    String data = paras.get("data").asText();
+                    return toBytes(data);
                 }
-            }
-
-            /*
-            平台收到设备的上报数据，根据需要编码ACK，对设备进行响应，如果此处返回null，表示不需要对设备响应。
-            * */
-            else if (this.msgType.equals("cloudRsp")) {
-                byte[] ack = new byte[4];
-                ack[0] = (byte) 0xAA;
-                ack[1] = (byte) 0xAA;
-                ack[2] = (byte) this.errcode;
-                ack[3] = (byte) this.hasMore;
-                return ack;
             }
             return null;
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
             return null;
         }
     }
+    
+    public static byte[] toBytes(String str) {
+        if(str == null || str.trim().equals("")) {
+            return new byte[0];
+        }
+        byte[] bytes = new byte[str.length() / 2];
+        for(int i = 0; i < str.length() / 2; i++) {
+            String subStr = str.substring(i * 2, i * 2 + 2);
+            bytes[i] = (byte) Integer.parseInt(subStr, 16);
+        }
+        return bytes;
+    }
+
+    
+    
+    
+    
+	public String getMsgType() {
+		return msgType;
+	}
+
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
+	}
+
+	public String getCmd() {
+		return cmd;
+	}
+
+	public void setCmd(String cmd) {
+		this.cmd = cmd;
+	}
+
+	public int getHasMore() {
+		return hasMore;
+	}
+
+	public void setHasMore(int hasMore) {
+		this.hasMore = hasMore;
+	}
+
+	public int getErrcode() {
+		return errcode;
+	}
+
+	public void setErrcode(int errcode) {
+		this.errcode = errcode;
+	}
+
+	public JsonNode getParas() {
+		return paras;
+	}
+
+	public void setParas(JsonNode paras) {
+		this.paras = paras;
+	}
 
 }

@@ -26,6 +26,7 @@ public class CmdProcess {
             e.printStackTrace();
         }
     }
+    
 
     public byte[] toByte() {
         try {
@@ -34,8 +35,8 @@ public class CmdProcess {
                 应用服务器下发的控制命令，本例只有一条控制命令：CMD_DATA
                 如果有其他控制命令，增加判断即可。
                 * */
-                if (this.cmd.equals("CMD_DATA")) {
-                    String data = paras.get("data").asText();
+                if (this.cmd.equals("command")) {
+                    String data = paras.get("CMD_DATA").asText();
                     return toBytes(data);
                 }
             }

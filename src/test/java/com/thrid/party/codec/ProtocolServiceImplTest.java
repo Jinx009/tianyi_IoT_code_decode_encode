@@ -168,15 +168,16 @@ public class ProtocolServiceImplTest {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode cloudReqObjectNode = mapper.createObjectNode();
         ObjectNode paras = mapper.createObjectNode();
-        paras.put("value", "10");
+        paras.put("CMD_DATA", "10");
         cloudReqObjectNode.put("identifier", "123");
         cloudReqObjectNode.put("msgType", "cloudReq");
-        cloudReqObjectNode.put("cmd", "SET_DEVICE_LEVEL");
+        cloudReqObjectNode.put("cmd", "command");
         cloudReqObjectNode.put("paras", paras);
         cloudReqObjectNode.put("hasMore", 0);
         cloudReqObjectNode.put("mid", 2016);
         return cloudReqObjectNode;
     }
+    
 
     /*
      * 初始化：设备对平台的响应码流
@@ -205,6 +206,7 @@ public class ProtocolServiceImplTest {
         ObjectNode cloudRspObjectNode = mapper.createObjectNode();
         cloudRspObjectNode.put("identifier", "123");
         cloudRspObjectNode.put("msgType", "cloudRsp");
+        cloudRspObjectNode.put("cmd", "command");
         // 设备上报的码流
         cloudRspObjectNode.put("request", device2CloudByte);
         cloudRspObjectNode.put("errcode", 0);

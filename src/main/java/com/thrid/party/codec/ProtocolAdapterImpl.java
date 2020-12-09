@@ -63,7 +63,8 @@ public class ProtocolAdapterImpl implements IProtocolAdapter {
     }   
     
     
-    private static ObjectNode initCloudReqObjectNode() {
+    @SuppressWarnings("deprecation")
+	private static ObjectNode initCloudReqObjectNode() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode cloudReqObjectNode = mapper.createObjectNode();
         ObjectNode paras = mapper.createObjectNode();

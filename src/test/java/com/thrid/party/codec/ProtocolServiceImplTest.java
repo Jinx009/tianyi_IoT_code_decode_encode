@@ -164,7 +164,8 @@ public class ProtocolServiceImplTest {
     /*
      * 初始化：平台向设备命令下发数据
      */
-    private static ObjectNode initCloudReqObjectNode() {
+    @SuppressWarnings("deprecation")
+	private static ObjectNode initCloudReqObjectNode() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode cloudReqObjectNode = mapper.createObjectNode();
         ObjectNode paras = mapper.createObjectNode();
